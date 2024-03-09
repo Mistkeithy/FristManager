@@ -4,14 +4,14 @@ from typing import Dict
 class Localization:
     def __init__(self, language: str = "en"):
         """
-        comment me
+        comment me in english
         """
         self.language = language
         self.translations = self.load_translations()
 
     def load_translations(self) -> Dict:
         """
-        comment me
+        comment me in english
         """
         try:
             with open(f"locales/{self.language}.json", "r", encoding="utf-8") as file:
@@ -27,6 +27,6 @@ class Localization:
     
     def get(self, key: str, **kwargs) -> str:
         """
-        comment me
+        comment me in english
         """
         return self.translations.get(key, key).format(**kwargs)

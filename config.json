@@ -1,0 +1,11 @@
+{
+    "localization_code": "en",
+    "voices_path": "voices.db",
+    "token_path": "token.txt",
+    "log_path": "bot.log",
+    "log_verb_level": 3,
+    "log_debug": 1,
+    "cmd_prefix": "/",
+    "game_activity": "Powered by FristManager",
+    "extension_path": "./cogs"
+}
