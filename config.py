@@ -67,7 +67,6 @@ class Config:
         try:
             with open(self.config_path, "w", encoding="utf-8") as file:
                 json.dump(config, file, indent=4)
-                print("Configuration file has been created/updated successfully.")
         except Exception as e:
             print(f"Failed to save configuration file: {e}")
 

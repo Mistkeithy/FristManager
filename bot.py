@@ -5,6 +5,7 @@ import os
 from typing import Dict
 from localization import Localization
 from config import Config
+from logger import Logger
 from disnake import OptionChoice, OptionType
 def load_reactions_data():
     try:
@@ -130,5 +131,6 @@ def save_thread_data(thread_data):
 if __name__ == "__main__":
     conf = Config()
     l10n = Localization(conf.get("localization_code"))
-    print(l10n.get("welcome", local=conf.get("localization_code")))
+    log = Logger.getInstance(verbose=3, debug=True, file_path=conf.get("log_path"))
+    log.write(l10n.get("welcome", local=conf.get("localization_code")), status=1, level=3, log_header=False)
     bot.run(TOKEN)
