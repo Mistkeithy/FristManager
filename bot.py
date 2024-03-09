@@ -158,7 +158,7 @@ def display_welcome(displayed = conf.get("welcome")):
     """
     if displayed:
         log.write(l10n.get("welcome"), status=0, level=3, log_header=False)
-        log.write(l10n.get("current_loc", local=conf.get("localization_code")), status=5, level=3, log_header=False)
+        log.write(l10n.get("current_loc", locale=conf.get("localization_code")), status=5, level=3)
 
 # Entry point
 if __name__ == "__main__":

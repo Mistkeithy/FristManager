@@ -8,6 +8,6 @@
     "cmd_prefix": "/",
     "game_activity": "Powered by FristManager",
     "extension_path": "./cogs",
-    "welcome": false,
+    "welcome": true,
     "ffmpeg_path": "ffmpeg"
 }

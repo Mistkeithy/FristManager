@@ -29,4 +29,9 @@ class Localization:
         """
         comment me in english
         """
-        return self.translations.get(key, key).format(**kwargs)
+        translation = self.translations.get(key, key)
+        try:
+            return translation.format(**kwargs)
+        except KeyError as e:
+            print(f"Warning: Missing placeholder for '{e.args[0]}' in translation for key '{key}'.")
+            return translation
