@@ -7,30 +7,44 @@ from localization import Localization
 from config import Config
 from logger import Logger
 from disnake import OptionChoice, OptionType
-def load_reactions_data():
-    try:
-        with open('reactions.json', 'r') as file:
-            return json.load(file)
-    except (json.JSONDecodeError, FileNotFoundError):
-        return {}
 
+# Core utils initialize
+conf = Config()
+l10n = Localization(conf.get("localization_code"))
+log = Logger.getInstance(verbose=conf.get("log_verb_level"), debug=conf.get("log_debug"), file_path=conf.get("log_path"))
+    
 # Get Discord token from file
 TOKEN = ""
 token_path = os.path.join(os.path.dirname(__file__), 'token.txt')
 with open(token_path, 'r') as token_file:
     TOKEN = token_file.read().strip()
 
+def load_reactions_data():
+    """
+    comment me in english
+    """
+    try:
+        with open('reactions.json', 'r') as file:
+            return json.load(file)
+    except (json.JSONDecodeError, FileNotFoundError):
+        return {}
+    
 reactions_data = load_reactions_data()
 intents = disnake.Intents.all()
 
-bot = commands.Bot(command_prefix='/', intents=intents, activity=disnake.Game(name="Powered by Fristikon"))
+# Create Bot
+bot = commands.Bot(command_prefix=conf.get("cmd_prefix"), intents=intents, activity=disnake.Game(name=conf.get("game_activity")))
 
-for filename in os.listdir("./cogs"):
+# Load extensions
+for filename in os.listdir(conf.get("extension_path")):
     if filename.endswith(".py"):
         bot.load_extension(f"cogs.{filename[:-3]}")
 
 @bot.event
 async def on_ready():
+    """
+    comment me in english
+    """
     print(f'Бот {bot.user} запущен!')
 
 @bot.slash_command(description='Автореакции')
@@ -46,12 +60,14 @@ async def реакции(
     ),
     emoji: str = commands.Param()
 ):
+    """
+    comment me in english
+    """
     if действие == "Добавить":
         if emoji not in reactions_data.get(str(канал.id), {}).get('emojis', []):
             reactions_data.setdefault(str(канал.id), {}).setdefault('emojis', {})[emoji] = True
             await ctx.send(f"Реакция '{emoji}' будет добавлена в канал {канал.mention} для новых сообщений.", ephemeral=True)
         else:
-            # Если реакция уже существует, вы можете явно установить ее значение на True
             reactions_data[str(канал.id)]['emojis'][emoji] = True
             await ctx.send(f"Реакция '{emoji}' будет добавлена в канал {канал.mention} для новых сообщений.",ephemeral=True)
     elif действие == "Удалить":
@@ -77,7 +93,9 @@ async def ветки(
     ),
     name: str = commands.Param()
 ):
-
+    """
+    comment me in english
+    """
     thread_data = load_thread_data()
 
     if действие == "Добавить":
@@ -91,9 +109,11 @@ async def ветки(
 
         await ctx.send(f"Автоветка успешно удалена для канала {канал}!", ephemeral=True)
 
-# On each message
 @bot.event
 async def on_message(message):
+    """
+    comment me in english
+    """
     # Загрузка данных о реакциях
     reactions_data = load_reactions_data()
     thread_data = load_thread_data()
@@ -107,7 +127,6 @@ async def on_message(message):
         if should_react and not (message.author.bot or message.is_system()):
             await message.add_reaction(emoji)
 
-
     for thread_name, should_create in thread_data[str(message.channel.id)].get('threads', {}).items():
         if should_create:
             thread = await message.create_thread(name=thread_name)
@@ -117,6 +136,9 @@ async def on_message(message):
             await welcome_message.delete()
 
 def load_thread_data():
+    """
+    comment me in english
+    """
     try:
         with open('thread.json', 'r') as file:
             return json.load(file)
@@ -124,13 +146,21 @@ def load_thread_data():
         return {}
 
 def save_thread_data(thread_data):
+    """
+    comment me in english
+    """
     with open('thread.json', 'w') as file:
         json.dump(thread_data, file, indent=4)
 
+def display_welcome(displayed = conf.get("welcome")):
+    """
+    comment me in english
+    """
+    if displayed:
+        log.write(l10n.get("welcome"), status=0, level=3, log_header=False)
+        log.write(l10n.get("current_loc", local=conf.get("localization_code")), status=5, level=3, log_header=False)
+
 # Entry point
 if __name__ == "__main__":
-    conf = Config()
-    l10n = Localization(conf.get("localization_code"))
-    log = Logger.getInstance(verbose=3, debug=True, file_path=conf.get("log_path"))
-    log.write(l10n.get("welcome", local=conf.get("localization_code")), status=1, level=3, log_header=False)
+    display_welcome()
     bot.run(TOKEN)

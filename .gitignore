@@ -57,5 +57,6 @@ db.sqlite3
 *.pid.lock
 token.txt
 voice.db
+config.json
 .idea/
 .vscode/

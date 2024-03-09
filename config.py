@@ -19,7 +19,6 @@ class Config:
         """
         try:
             with open(self.config_path, "r", encoding="utf-8") as file:
-                print("Configuration file loaded successfully.")
                 return json.load(file)
         except (FileNotFoundError, json.JSONDecodeError) as e:
             print(f"Error loading configuration file: {e}. Using defaults and creating default config file.")
@@ -37,10 +36,12 @@ class Config:
             "token_path": "token.txt",
             "log_path": "bot.log",
             "log_verb_level": 3,
-            "log_debug": 1,
+            "log_debug": False,
             "cmd_prefix": "/",
             "game_activity": "Powered by FristManager",
-            "extension_path": "./cogs"
+            "extension_path": "./cogs",
+            "welcome": True,
+            "ffmpeg_path": "ffmpeg"
         }
     
     def check_and_update_config(self):

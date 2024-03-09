@@ -1,11 +1,13 @@
 {
-    "localization_code": "en",
+    "localization_code": "ru",
     "voices_path": "voices.db",
     "token_path": "token.txt",
     "log_path": "bot.log",
     "log_verb_level": 3,
-    "log_debug": 1,
+    "log_debug": true,
     "cmd_prefix": "/",
     "game_activity": "Powered by FristManager",
-    "extension_path": "./cogs"
+    "extension_path": "./cogs",
+    "welcome": false,
+    "ffmpeg_path": "ffmpeg"
 }

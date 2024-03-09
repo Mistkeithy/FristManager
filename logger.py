@@ -67,20 +67,20 @@ class Logger:
         """
         return self.log_entry
 
-    def write_console(self, input_text, status=1, level=3, log_header=True):
+    def write_console(self, input_text, status=0, level=3, log_header=True):
         """
         comment me in english
         """
         print(self.get_log_entry())
 
-    def write_file(self, input_text, status=1, level=3, log_header=True):
+    def write_file(self, input_text, status=0, level=3, log_header=True):
         """
         comment me in english
         """
         with open(self.file_path, "a", encoding="utf-8") as f:
             f.write(self.get_log_entry() + "\n")
 
-    def write(self, input_text, status=1, level=3, log_on_console=True, log_to_file=True, log_header=True):
+    def write(self, input_text, status=0, level=3, log_on_console=True, log_to_file=True, log_header=True):
         """
         comment me in english
         """
