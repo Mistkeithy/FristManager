@@ -3,10 +3,16 @@ from typing import Dict
 
 class Localization:
     def __init__(self, language: str = "en"):
+        """
+        comment me
+        """
         self.language = language
         self.translations = self.load_translations()
 
     def load_translations(self) -> Dict:
+        """
+        comment me
+        """
         try:
             with open(f"locales/{self.language}.json", "r", encoding="utf-8") as file:
                 return json.load(file)
@@ -20,4 +26,7 @@ class Localization:
                 raise Exception("Default translation file (en.json) not found.")
     
     def get(self, key: str, **kwargs) -> str:
+        """
+        comment me
+        """
         return self.translations.get(key, key).format(**kwargs)

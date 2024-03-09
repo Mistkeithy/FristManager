@@ -4,6 +4,7 @@ import json
 import os
 from typing import Dict
 from localization import Localization
+from config import Config
 from disnake import OptionChoice, OptionType
 def load_reactions_data():
     try:
@@ -125,9 +126,9 @@ def save_thread_data(thread_data):
     with open('thread.json', 'w') as file:
         json.dump(thread_data, file, indent=4)
 
-# Localization object
-l10n = Localization("ru")
-
 # Entry point
 if __name__ == "__main__":
+    conf = Config()
+    l10n = Localization(conf.get("localization_code"))
+    print(l10n.get("welcome", local=conf.get("localization_code")))
     bot.run(TOKEN)
