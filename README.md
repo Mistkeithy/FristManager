@@ -1,9 +1,9 @@
 # FristManager
-![FristManager](https://github.com/Mistkeithy/FristManager/assets/banner.png)
+![FristManager](https://github.com/Mistkeithy/FristManager/assets/108419207/a80ec1d2-b00f-44f3-b6f0-b68342e4e195)
 
 FristManager is a multifunctional Discord bot supporting various features. This README outlines the main capabilities and instructions for use.
 
-## Features
+## Features!
 
 1. **Auto Reactions**: The bot places reactions under messages in the channel you have configured.
 
