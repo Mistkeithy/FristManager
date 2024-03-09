@@ -1,16 +1,24 @@
 {
     "welcome": "-- FristManager --\nСоздан Fristikon и Mistkeithy\n",
 	"current_loc": "Используется следующая локализация: {locale}",
-    "add": "Добавить",
-    "remove": "Удалить",
+    "is_running": "Инициализация завершена, {name} ждёт команд.",
     "cmd_threads": "ветки",
     "cmd_threads_description": "Создать ветку",
     "cmd_threads_was_removed": "Автоветка успешно удалена для канала {channel}!",
     "cmd_threads_was_added": "Автоветка успешно добавлена для канала {channel}!",
+    "cmd_reactions": "реакции",
+    "cmd_reactions_description": "Создать реакцию",
+    "cmd_reaction_was_added": "Реакция '{name}' будет добавлена в канал {channel} для новых сообщений.",
+    "cmd_reaction_was_removed": "Реакция '{name}' будет удалена из канала {channel} для новых сообщений.",
+    "cmd_reaction_not_exist": "Реакции '{name}' нет в канале {channel}.",
+    "add": "Добавить",
+    "remove": "Удалить",
     "channel_select": "канал",
     "channel_select_description": "Выбрать канал из приведенного списка",
     "action": "действие",
     "action_description": "Выбрать действие",
     "name": "имя",
-    "name_description": "Использовать имя"
+    "name_description": "Эмодзи",
+    "emoji": "имя",
+    "emoji_description": "Использовать эмодзи"
 }

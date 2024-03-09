@@ -59,5 +59,7 @@ token.txt
 voice.db
 config.json
 thread.json
+log_settings.json
+autorole.json
 .idea/
 .vscode/

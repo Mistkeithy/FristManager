@@ -45,37 +45,39 @@ async def on_ready():
     """
     comment me in english
     """
-    print(f'Бот {bot.user} запущен!')
+    log.write(l10n.get("is_running", name=bot.user), status=6, level=2)
 
-@bot.slash_command(description='Автореакции')
+@bot.slash_command(name = l10n.get("cmd_reactions"), description=l10n.get("cmd_reactions_description"))
 @commands.has_permissions(manage_messages = True, manage_channels = True)
-async def реакции(
+async def reactions(
     ctx,
-    канал: disnake.TextChannel, 
-    действие: str = commands.Param(
+    channel: disnake.TextChannel = commands.Param(name = l10n.get("channel_select"), description = l10n.get("channel_select_description")),
+    action: str = commands.Param(
         choices=[
-            OptionChoice(name="Добавить", value="Добавить"),
-            OptionChoice(name="Удалить", value="Удалить")
-        ]
+            OptionChoice(name=l10n.get("add"), value=l10n.get("add")),
+            OptionChoice(name=l10n.get("remove"), value=l10n.get("remove"))
+        ],
+        name = l10n.get("action"), 
+        description = l10n.get("action_description")
     ),
-    emoji: str = commands.Param()
+    emoji: str = commands.Param(name = l10n.get("emoji"), description = l10n.get("emoji_description"))
 ):
     """
     comment me in english
     """
-    if действие == "Добавить":
-        if emoji not in reactions_data.get(str(канал.id), {}).get('emojis', []):
-            reactions_data.setdefault(str(канал.id), {}).setdefault('emojis', {})[emoji] = True
-            await ctx.send(f"Реакция '{emoji}' будет добавлена в канал {канал.mention} для новых сообщений.", ephemeral=True)
+    if action == l10n.get("add"):
+        if emoji not in reactions_data.get(str(channel.id), {}).get('emojis', []):
+            reactions_data.setdefault(str(channel.id), {}).setdefault('emojis', {})[emoji] = True
+            await ctx.send(l10n.get("cmd_reaction_was_added", name=emoji, channel=channel.mention), ephemeral=True)
         else:
-            reactions_data[str(канал.id)]['emojis'][emoji] = True
-            await ctx.send(f"Реакция '{emoji}' будет добавлена в канал {канал.mention} для новых сообщений.",ephemeral=True)
-    elif действие == "Удалить":
-        if emoji in reactions_data.get(str(канал.id), {}).get('emojis', []):
-            reactions_data[str(канал.id)]['emojis'][emoji] = False
-            await ctx.send(f"Реакция '{emoji}' будет удалена из канала {канал.mention} для новых сообщений.", ephemeral=True)
+            reactions_data[str(channel.id)]['emojis'][emoji] = True
+            await ctx.send(l10n.get("cmd_reaction_was_added", name=emoji, channel=channel.mention), ephemeral=True)
+    elif action == l10n.get("remove"):
+        if emoji in reactions_data.get(str(channel.id), {}).get('emojis', []):
+            reactions_data[str(channel.id)]['emojis'][emoji] = False
+            await ctx.send(l10n.get("cmd_reaction_was_removed", name=emoji, channel=channel.mention), ephemeral=True)
         else:
-            await ctx.send(f"Реакции '{emoji}' нет в канале {канал.mention}.", ephemeral=True)
+            await ctx.send(l10n.get("cmd_reaction_not_exist", name=emoji, channel=channel.mention), ephemeral=True)
 
     with open('reactions.json', 'w') as file:
         json.dump(reactions_data, file, indent=4)
@@ -116,26 +118,24 @@ async def on_message(message):
     """
     comment me in english
     """
-    # Загрузка данных о реакциях
     reactions_data = load_reactions_data()
     thread_data = load_thread_data()
 
-    # Проверка, существует ли запись для канала в reactions_data
     channel_id = str(message.channel.id)
-    if channel_id not in reactions_data:
+    if channel_id in reactions_data:
+        for emoji, should_react in reactions_data[channel_id].get('emojis', {}).items():
+            if should_react and not (message.author.bot or message.is_system()):
+                await message.add_reaction(emoji)
         return
 
-    for emoji, should_react in reactions_data[channel_id].get('emojis', {}).items():
-        if should_react and not (message.author.bot or message.is_system()):
-            await message.add_reaction(emoji)
+    if channel_id in thread_data:
+        for thread_name, should_create in thread_data[str(message.channel.id)].get('threads', {}).items():
+            if should_create:
+                thread = await message.create_thread(name=thread_name)
 
-    for thread_name, should_create in thread_data[str(message.channel.id)].get('threads', {}).items():
-        if should_create:
-            thread = await message.create_thread(name=thread_name)
+                welcome_message = await thread.send(f".")
 
-            welcome_message = await thread.send(f".")
-
-            await welcome_message.delete()
+                await welcome_message.delete()
 
 def load_thread_data():
     """
