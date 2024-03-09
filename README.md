@@ -1,42 +1,40 @@
-# FristCustom
-![Patron_in_Ohmatdyt,_28_April_2022_(04)](https://github.com/Frist6361/FristCustom/assets/105719076/7c3215d3-0d37-4d70-84ab-50ebaefa8ec4)
+# FristManager
+![FristManager](https://github.com/Mistkeithy/FristManager/assets/banner.png)
 
-FristCustom - многофункциональный Discord-бот с поддержкой различных функций. В этом README описаны основные возможности и инструкции по использованию.
+FristManager is a multifunctional Discord bot supporting various features. This README outlines the main capabilities and instructions for use.
 
-## Функции
+## Features
 
+1. **Auto Reactions**: The bot places reactions under messages in the channel you have configured.
 
-1. **Автореакции**: Бот ставит реакции под сообщениями в нужном канале который вы настроили.
+2. **Auto Threads**: The bot can create threads under new messages in a specified channel.
 
-2. **Автоветки**: Бот может ставить ветки под новыми сообщениями в определённом канале.
+3. **Music Commands**: Allow users to play music in voice channels. There are commands for managing the queue, skipping tracks, and leaving the voice channel.
 
-3. **Музыкальные команды**: Позволяют пользователям воспроизводить музыку в голосовых каналах. Есть команды для управления очередью, пропуска треков и выхода из голосового канала.
+4. **Private Voice Channel Creation**: The bot can create temporary private voice channels for server members.
 
-4. **Создание приватных войсов**: Бот может создавать временные приватные голосовые каналы для участников сервера.
+5. **Role Assignment Upon Joining**: Automatically assigns roles to new members upon joining the server to enhance the user experience.
 
-5. **Настройка ролей при заходе на сервер**: Автоматическое присвоение ролей новым участникам при вступлении на сервер для улучшения пользовательского опыта.
+6. **Event Logging**: Recording various server events for analysis and security purposes.
 
-6. **Логирование событий**: Фиксирование различных событий на сервере для анализа и обеспечения безопасности.
+7. **Moderation Commands**: Commands for server moderation, such as ban, mute, kick.
 
-7. **Модерационные команды**: Команды для модерации сервера, такие как бан, мут, кик.
+8. **Tickets**: You can create tickets for your server.
 
-8. **Тикеты**: Вы можете создать свой тикет для своего сервера
-## Инструкции по установке и использованию
+## Installation and Usage Instructions
 
-1. **Установка зависимостей**: Запустите `pip install -r requirements.txt` и `apt install ffmpeg` для установки необходимых библиотек.
+1. **Dependency Installation**: Run `pip install -r requirements.txt` and `apt install ffmpeg` to install the necessary libraries.
 
-2. **Конфигурация токена**: Вставьте токен вашего бота в файл `config.py`.
+2. **Token Configuration**: Insert your bot's token into the `config.py` file.
 
-3. **Запуск бота**: Запустите файл `bot.py` для запуска вашего бота.
+3. **Starting the Bot**: Run the `bot.py` file to start your bot.
 
+## Questions and Support
 
+If you have any questions or need assistance, please contact the developers:
 
-## Вопросы и поддержка
+- Discord: `fristikon`, `mistkeithy`
 
-Если у вас есть вопросы или вам нужна помощь, свяжитесь с разработчиком:
+## Contribution
 
-- Discord: `fristikon`
-
-
-
-
+Thanks to `mistkeithy` for working on and improving the code!
