@@ -8,7 +8,7 @@ from config import Config
 from logger import Logger
 from disnake import OptionChoice, OptionType
 
-# Core utils initialize
+# Main configuration objects
 conf = Config()
 l10n = Localization(conf.get("localization_code"))
 log = Logger.getInstance(verbose=conf.get("log_verb_level"), debug=conf.get("log_debug"), file_path=conf.get("log_path"))
@@ -80,34 +80,36 @@ async def реакции(
     with open('reactions.json', 'w') as file:
         json.dump(reactions_data, file, indent=4)
 
-@bot.slash_command(description='Автоветки')
+@bot.slash_command(name = l10n.get("cmd_threads"), description=l10n.get("cmd_threads_description"))
 @commands.has_permissions(manage_messages = True, manage_channels = True)
-async def ветки(
+async def threads(
     ctx,
-    канал: disnake.TextChannel, 
-    действие: str = commands.Param(
+    channel: disnake.TextChannel = commands.Param(name = l10n.get("channel_select"), description = l10n.get("channel_select_description")),
+    action: str = commands.Param(
         choices=[
-            OptionChoice(name="Добавить", value="Добавить"),
-            OptionChoice(name="Удалить", value="Удалить")
+            OptionChoice(name=l10n.get("add"), value=l10n.get("add")),
+            OptionChoice(name=l10n.get("remove"), value=l10n.get("remove"))
         ],
+        name = l10n.get("action"), 
+        description = l10n.get("action_description")
     ),
-    name: str = commands.Param()
+    name: str = commands.Param(name = l10n.get("name"), description = l10n.get("name_description"))
 ):
     """
     comment me in english
     """
     thread_data = load_thread_data()
 
-    if действие == "Добавить":
-        thread_data.setdefault(str(канал.id), {}).setdefault('threads', {})[name] = True
+    if action == l10n.get("add"):
+        thread_data.setdefault(str(channel.id), {}).setdefault('threads', {})[name] = True
         save_thread_data(thread_data)
 
-        await ctx.send(f"Автоветка успешно добавлена для канала {канал}!", ephemeral=True)
-    elif действие == "Удалить":
-        thread_data.setdefault(str(канал.id), {}).setdefault('threads', {})[name] = False
+        await ctx.send(l10n.get("cmd_threads_was_added", channel=channel), ephemeral=True)
+    elif action == l10n.get("remove"):
+        thread_data.setdefault(str(channel.id), {}).setdefault('threads', {})[name] = False
         save_thread_data(thread_data)
 
-        await ctx.send(f"Автоветка успешно удалена для канала {канал}!", ephemeral=True)
+        await ctx.send(l10n.get("cmd_threads_was_removed", channel=channel), ephemeral=True)
 
 @bot.event
 async def on_message(message):

@@ -1,4 +1,16 @@
 {
     "welcome": "-- FristManager --\nСоздан Fristikon и Mistkeithy\n",
-	"current_loc": "Используется следующая локализация: {locale}" 
+	"current_loc": "Используется следующая локализация: {locale}",
+    "add": "Добавить",
+    "remove": "Удалить",
+    "cmd_threads": "ветки",
+    "cmd_threads_description": "Создать ветку",
+    "cmd_threads_was_removed": "Автоветка успешно удалена для канала {channel}!",
+    "cmd_threads_was_added": "Автоветка успешно добавлена для канала {channel}!",
+    "channel_select": "канал",
+    "channel_select_description": "Выбрать канал из приведенного списка",
+    "action": "действие",
+    "action_description": "Выбрать действие",
+    "name": "имя",
+    "name_description": "Использовать имя"
 }
