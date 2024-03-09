@@ -2,7 +2,6 @@ import disnake
 from disnake.ext import commands
 import json
 import os
-from config import TOKEN
 from disnake import OptionChoice, OptionType
 def load_reactions_data():
     try:
@@ -11,6 +10,11 @@ def load_reactions_data():
     except (json.JSONDecodeError, FileNotFoundError):
         return {}
 
+# Get Discord token from file
+TOKEN = ""
+token_path = os.path.join(os.path.dirname(__file__), 'token.txt')
+with open(token_path, 'r') as token_file:
+    TOKEN = token_file.read().strip()
 
 reactions_data = load_reactions_data()
 intents = disnake.Intents.all()
@@ -70,8 +74,6 @@ async def ветки(
     name: str = commands.Param()
 ):
 
-
-
     thread_data = load_thread_data()
 
     if действие == "Добавить":
@@ -85,9 +87,7 @@ async def ветки(
 
         await ctx.send(f"Автоветка успешно удалена для канала {канал}!", ephemeral=True)
 
-
-
-
+# On each message
 @bot.event
 async def on_message(message):
     # Загрузка данных о реакциях
@@ -112,10 +112,6 @@ async def on_message(message):
 
             await welcome_message.delete()
 
-
-
-
-
 def load_thread_data():
     try:
         with open('thread.json', 'r') as file:
@@ -127,5 +123,5 @@ def save_thread_data(thread_data):
     with open('thread.json', 'w') as file:
         json.dump(thread_data, file, indent=4)
 
-
+# Main
 bot.run(TOKEN)
