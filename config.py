@@ -41,7 +41,9 @@ class Config:
             "game_activity": "Powered by FristManager",
             "extension_path": "./cogs",
             "welcome": True,
-            "ffmpeg_path": "ffmpeg"
+            "ffmpeg_path": "ffmpeg",
+            "thread_path": "thread.json",
+            "reactions_path": "reactions.json"
         }
     
     def check_and_update_config(self):

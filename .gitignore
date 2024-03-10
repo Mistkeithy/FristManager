@@ -61,5 +61,6 @@ config.json
 thread.json
 log_settings.json
 autorole.json
+queue.json
 .idea/
 .vscode/

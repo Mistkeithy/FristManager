@@ -1,6 +1,16 @@
 import disnake
 from disnake.ext import commands
 import json
+import os
+from config import Config
+from logger import Logger
+from localization import Localization
+
+# Global aid objects
+conf = Config()
+l10n = Localization(conf.get("localization_code"))
+log = Logger.getInstance(verbose=conf.get("log_verb_level"), debug=conf.get("log_debug"), file_path=conf.get("log_path"))
+log.write(l10n.get("loaded_extension", extension = os.path.basename(__file__)), status=5, level=4)
 
 class AutoroleCog(commands.Cog):
     def __init__(self, bot):

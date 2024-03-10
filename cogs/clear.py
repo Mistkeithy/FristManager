@@ -1,5 +1,15 @@
 import disnake
 from disnake.ext import commands
+import os
+from config import Config
+from logger import Logger
+from localization import Localization
+
+# Global aid objects
+conf = Config()
+l10n = Localization(conf.get("localization_code"))
+log = Logger.getInstance(verbose=conf.get("log_verb_level"), debug=conf.get("log_debug"), file_path=conf.get("log_path"))
+log.write(l10n.get("loaded_extension", extension = os.path.basename(__file__)), status=5, level=4)
 
 class ClearCog(commands.Cog):
     def __init__(self, bot):
@@ -10,16 +20,18 @@ class ClearCog(commands.Cog):
     async def clear_messages(
         self,
         ctx,
-        количество_сообщений: int = commands.Param(description='Количество сообщений для удаления')
+        count: int = commands.Param(description='Количество сообщений для удаления')
     ):
-        if количество_сообщений <= 0:
-            await ctx.send('Количество сообщений для удаления должно быть положительным числом.', ephemeral=True)
+        log.write(l10n.get("removing_messages", count=count), status=5, level=5)
+        if count <= 0:
+            await ctx.send(l10n.get("incorrect_value", value=count), ephemeral=True)
             return
-
         try:
-            await ctx.channel.purge(limit=количество_сообщений)
-            await ctx.send(f'Удалено {количество_сообщений} сообщений.', ephemeral=True)
+            await ctx.channel.purge(limit=count)
+            await ctx.send(l10n.get("removed_messages", count=count), ephemeral=True)
         except disnake.errors.Forbidden:
-            await ctx.send('У меня нет прав на удаление сообщений.', ephemeral=True)
+            log.write(l10n.get("no_permission"), status=5, level=5)
+            await ctx.send(l10n.get("no_permission"), ephemeral=True)
+
 def setup(bot):
     bot.add_cog(ClearCog(bot))
